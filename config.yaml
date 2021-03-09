@@ -1,0 +1,37 @@
+metadata:
+  id: tmp
+  name:
+    eng: tmp
+    swe: tmp
+  language: swe
+  description:
+    eng: tmp
+    swe: tmp
+import:
+  source_dir: source
+  importer: text_import:parse
+  document_annotation: text
+classes:
+  token:msd: <token>:stanza.msd
+  token:pos: <token>:stanza.pos
+export:
+  default:
+    - xml_export:pretty
+  annotations:
+    - segment.token
+    - segment.sentence
+    - segment.paragraph
+    - <token>:misc.head
+    - <token>:misc.tail
+    - <token>:misc.upos
+    - <token>:misc.number_rel_<sentence>
+    - <sentence>:misc.number_rel_<text>
+    - <text>:misc.number_position
+    - <token>:stanza.msd
+    - <token>:stanza.ufeats
+    - <token>:stanza.baseform
+    - <token>:saldo.compwf
+    - <token>:saldo.baseform2
+preload:
+  - saldo:annotate
+  - saldo:compound

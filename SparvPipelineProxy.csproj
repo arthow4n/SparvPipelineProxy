@@ -5,6 +5,21 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <OutputType>Exe</OutputType>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>link</TrimMode>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <!-- https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md#background -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- Drop PDB file -->
+    <DebugType>None</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
   <PropertyGroup>
     <NoWarn>0162;1998</NoWarn>
   </PropertyGroup>
