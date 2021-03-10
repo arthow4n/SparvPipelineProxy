@@ -15,4 +15,4 @@ WORKDIR /tmp/sparv-pipeline
 COPY ./config.yaml ./
 
 ENTRYPOINT [ "/bin/bash", "-l", "-c", "sparv preload --socket /tmp/sparv_preload.sock --processes `nproc --all` & until ss -l | grep -q /tmp/sparv_preload.sock; do echo Waiting for sparv preload...; sleep 3; done; ASPNETCORE_URLS=http://0.0.0.0:5000/ /home/sparv-pipeline/.local/bin/SparvPipelineProxy" ]
-HEALTHCHECK --interval=60s --timeout=10s --start-period=60s --retries=2 CMD [ "/bin/bash", "-c", "curl -sfo /dev/null http://127.0.0.1:5000/healthcheck" ]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=2 CMD [ "/bin/bash", "-c", "curl -sfo /dev/null http://127.0.0.1:5000/healthcheck || exit 1" ]
