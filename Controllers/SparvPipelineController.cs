@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SparvPipelineProxy.Utils;
@@ -10,6 +9,8 @@ namespace SparvPipelineProxy.Controllers
     public class SparvPipelineController : ControllerBase
     {
         [HttpPost("/annotate/sparv")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(AnnotationResponse))]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> Annotate(AnnotationRequest request)
         {
             if (request.LanguageCode != "swe")
@@ -17,11 +18,10 @@ namespace SparvPipelineProxy.Controllers
                 return Problem(statusCode: (int)HttpStatusCode.BadRequest, title: "Only Swedish (swe) is supported for now.");
             }
 
-            return Content(
-                await CommandService.AnnotateWithSparvPipeline(request.LanguageCode, request.Input),
-                "text/xml",
-                Encoding.UTF8
-            );
+            return Ok(new AnnotationResponse
+            {
+                Xml = await CommandService.AnnotateWithSparvPipeline(request.LanguageCode, request.Input),
+            });
         }
 
         [HttpGet("/healthcheck")]
@@ -35,5 +35,10 @@ namespace SparvPipelineProxy.Controllers
     {
         public string Input { get; init; } = "";
         public string LanguageCode { get; init; } = "";
+    }
+
+    public class AnnotationResponse
+    {
+        public string Xml { get; init; } = "";
     }
 }
