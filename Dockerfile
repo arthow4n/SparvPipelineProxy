@@ -7,7 +7,7 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o out
 
-FROM arthow4n/sparv-pipeline:latest
+FROM arthow4n/sparv-pipeline:v4.1.0
 
 COPY --from=build-env --chown=sparv-pipeline:sparv-pipeline /app/out/SparvPipelineProxy /home/sparv-pipeline/.local/bin/
 
