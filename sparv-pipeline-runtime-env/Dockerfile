@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.6
 SHELL ["/bin/bash", "-l", "-c"]
 
 RUN apt update && \
@@ -16,11 +16,7 @@ WORKDIR /home/sparv-pipeline
 RUN python3 -m pip install --user pipx && \
     python3 -m pipx ensurepath
 
-# TODO: Change this to stable release.
-# https://github.com/spraakbanken/sparv-pipeline/issues/96#issuecomment-792732238
-# https://github.com/spraakbanken/sparv-pipeline/issues/95#issuecomment-792727917
-
-ENV BUILD_INFO_SPARV_SOURCE="git+https://github.com/spraakbanken/sparv-pipeline.git@32e618e34d2afcd301b5aa683be70fc2282d984b"
+ENV BUILD_INFO_SPARV_SOURCE="git+https://github.com/spraakbanken/sparv-pipeline.git@v4.1.0"
 # License: MIT License
 RUN pipx install "${BUILD_INFO_SPARV_SOURCE}"
 
